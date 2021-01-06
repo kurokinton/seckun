@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: app
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: app
+    spec:
+      containers:
+        - args:
+            - bundle
+            - exec
+            - ruby
+            - app.rb
+            - -o0.0.0.0
+          env:
+            - name: POSTGRES_DB
+              value: seckun
+            - name: POSTGRES_HOST
+              value: 172.17.0.4
+            - name: POSTGRES_PASSWORD
+              value: testpassw0rd
+            - name: POSTGRES_USER
+              value: postgres
+          image: seckun:app
+          name: app
+          ports:
+            - containerPort: 4567
+          resources: {}
+      restartPolicy: Always
+status: {}

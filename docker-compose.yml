@@ -1,0 +1,17 @@
+app:
+  image: seckun:app
+  command: bundle exec ruby app.rb -o0.0.0.0
+  ports:
+    - 8080:4567
+  environment:
+    - POSTGRES_DB=seckun
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=testpassw0rd
+    - POSTGRES_HOST=db
+  links: 
+    - db
+db:
+  image: postgres
+  environment:
+    - POSTGRES_PASSWORD=testpassw0rd
+    - POSTGRES_DB=seckun
